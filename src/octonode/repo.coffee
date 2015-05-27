@@ -410,14 +410,14 @@ class Repo
   # List deployments
   # '/repos/:owner/:repo/deployments' GET
   deployments: ()->
-    @client.get "/repos/#{@name}/deployments/", (err, s, b, h) ->
+    @client.get "/repos/#{@name}/deployments", (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Deployment error")) else cb null, b, h
 
   # Create deployment
   # '/repos/:owner/:repo/deployments' POST
   deployment: (params..., cb)->
-    @client.post "/repos/#{@name}/deployments/", params..., (err, s, b, h) ->
+    @client.post "/repos/#{@name}/deployments", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Deployment error")) else cb null, b, h
 
