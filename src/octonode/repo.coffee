@@ -407,5 +407,33 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b, h
 
+  # List deployments
+  # '/repos/:owner/:repo/deployments' GET
+  deployments: ()->
+    @client.get "/repos/#{@name}/deployments/", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Deployment error")) else cb null, b, h
+
+  # Create deployment
+  # '/repos/:owner/:repo/deployments' POST
+  deployment: (params..., cb)->
+    @client.post "/repos/#{@name}/deployments/", params..., (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Deployment error")) else cb null, b, h
+
+  # List deployment statuses
+  # '/repos/:owner/:repo/deployments/:id/statuses' GET
+  deploymentStatuses: (id)->
+    @client.get "/repos/#{@name}/deployments/#{id}/statuses", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Deployment status error")) else cb null, b, h
+
+  # Create deployment status
+  # '/repos/:owner/:repo/deployments' POST
+  deploymentStatus: (id, params..., cb)->
+    @client.post "/repos/#{@name}/deployments/#{id}/statuses", params..., (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Deployment status error")) else cb null, b, h
+
 # Export module
 module.exports = Repo
